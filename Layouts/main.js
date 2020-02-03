@@ -1,13 +1,10 @@
-import Head from 'next/head'
+import Head from '../Components/head'
 import Nav from '../Components/nav'
 
 const Layout = ({ children, title = 'Pasa Job' }) => (
   <div>
     
-    <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-    </Head>
+    <Head title={title} />
     
     <div>
         <Nav />

@@ -1,0 +1,20 @@
+#registerPage{
+    .register-form{
+        width: 600px;
+        background-color: rgba($color: #ccc, $alpha: 0.7);
+        padding : 20px;
+        border-radius: 10px;
+        border: solid 1px #ccc;
+        z-index: 1;
+    }
+    .fileUploader{
+        height: 100px;
+        background-color: grey;
+        b{
+            display: block;
+            text-align: center;
+            padding-top: 40px;
+        }
+    }
+    
+}

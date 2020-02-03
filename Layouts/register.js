@@ -1,17 +1,14 @@
-import Head from 'next/head'
+import Head from '../Components/head'
 import { Layout } from 'antd';
-import './register.scss'
+
 const { Content } = Layout;
 
- const RegisterLayout = ({ children, title = 'Pasa Job', pageId="registerLogin" }) => (
-  <div id={pageId}>
+ const RegisterLayout = ({ children, title = 'Pasa Job', pageId="registerPage" }) => (
+  <div id={pageId} className="register-layout">
     <img className="background-logo" src="/images/logo.png" />
-    <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-    </Head>
+    <Head title={title} />
     <Layout>
-      <Content className="registerLayout" >
+      <Content >
         {children}
       </Content>
     </Layout>

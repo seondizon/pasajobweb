@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import './style.scss'
 import { Form, Icon, Input, Button, Col, Row, Checkbox } from 'antd';
-import Layout from '../../Layouts/register'
+import Layout from '../Layouts/register'
 import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
 
@@ -140,14 +139,18 @@ const Register = (props) => {
   )
 
   return (
-    <Layout title="Registration"  >
-    <div className="register-form">
 
-    { state.step == 1 && renderStepOne() }
-    { state.step == 2 && renderStep2() }
+    <Layout title="Registration" pageId="registerPage" >
+      
+      <div className="register-form">
 
-    </div>
-  </Layout>
+        { state.step == 1 && renderStepOne() }
+        { state.step == 2 && renderStep2() }
+
+      </div>
+      
+    </Layout>
+
   )
   
 }

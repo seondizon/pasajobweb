@@ -1,30 +1,20 @@
-import Head from 'next/head'
-import Headbar from '../Components/headbar'
+import Head from '../Components/head'
+import Header from '../Components/header'
 import { Layout, Menu, Breadcrumb } from 'antd';
-import './dashboard.scss'
+import Footer from '../Components/footer'
 
-const { Header, Content, Footer } = Layout;
-
-const DashboardLayout = ({ children, title = 'Dashboard' }) => (
-  <div>
-    <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-    </Head>
-    
+const DashboardLayout = ({ children, title = 'Dashboard', pageId="dashboardPage" }) => (
+  <div id={pageId} className="dashboard-layout">
+    <Head title={title} />
     <Layout>
 
-      <Header>
-        <Headbar />
-      </Header>
+      <Header />
       
-      <Content>
+      <Layout.Content style={{ padding: '5px 50px' }} >
         {children}
-      </Content>
-      
-      <Footer>
-        <p>© Copyright 2020 PasaJob.com - All Rights Reserved</p>
-      </Footer>
+      </Layout.Content>
+        
+      <Footer />
 
     </Layout>
   </div>

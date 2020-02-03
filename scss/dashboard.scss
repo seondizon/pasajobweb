@@ -1,0 +1,19 @@
+#dashboardPage{
+    .dash-content{
+        display: flex;
+        justify-content: space-between;
+        .dash-containers{
+            // box-sizing: border-box;
+
+            &.job-post{
+                flex-basis: 24%;
+            }
+            &.candidate{
+                flex-basis: 24%;
+            }
+            &.schedule{
+                flex-basis: 50%;
+            }
+        }
+    }
+}

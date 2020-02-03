@@ -1,8 +1,8 @@
 import React from 'react'
-import './style.scss'
 import { Form, Icon, Input, Button, Col, Row, Checkbox } from 'antd';
-import Layout from '../../Layouts/register'
+import Layout from '../Layouts/register'
 import FormItem from 'antd/lib/form/FormItem';
+import Link from 'next/link';
 
 const Login = (props) => {
 
@@ -34,6 +34,15 @@ const Login = (props) => {
 
           <Row>
             <Col>
+              <div className="user-help" >
+                <Link href="#">Forgot password?</Link>
+                <Link href="#">Create account.</Link>
+              </div>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
               <Button type="primary" block>
                 Login
               </Button>
@@ -46,11 +55,11 @@ const Login = (props) => {
 
 
   return (
-    <Layout title="Login"  >
+    <Layout title="Login" pageId="loginPage" >
     <div className="login-form">
-    { LoginForm() }
+      { LoginForm() }
     </div>
-  </Layout>
+    </Layout>
   )
   
 }

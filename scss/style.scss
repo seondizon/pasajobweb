@@ -1,0 +1,79 @@
+/*Vars*/
+@import '_vars';
+/* Layout */
+@import 'register-layout';
+@import 'dashboard-layout';
+
+/*Pages*/
+@import 'register';
+@import 'login';
+@import 'dashboard';
+
+/*General*/
+footer.ant-layout-footer{
+    padding: 15px 50px;
+    p{
+        margin-bottom: 0px;
+    }
+}
+
+header.ant-layout-header{
+    
+    display: flex;
+    line-height: initial;
+    align-items: center;
+    background-image: linear-gradient( to right, $main-green , $main-blue );
+
+    .logo{
+        flex: 1;
+        a{
+            display: flex;
+            align-items: center;
+        }
+        
+        img{ 
+            width: 35px; 
+            height: 35px;
+        }
+        
+        .logo-text{
+            font-weight: bold;
+            color: #fff;
+            font-size: 20px;
+            margin-left: 5px;
+            letter-spacing: 1px;
+        }
+    }
+
+    .menu-wrapper{
+        flex: 6;
+    }
+
+    .profile-icon-wrapper{
+        flex : 1;
+        display: flex;
+        justify-content: flex-end;
+        span{
+            margin-right: 5px;
+            font-weight: bold;
+            color: #fff;
+        }
+        img {
+            width: 30px;
+        }
+    }
+
+    .ant-menu{
+        background: transparent;
+        .ant-menu-item{
+            font-weight: bold;
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 1.5px;
+            a{
+                color: #fff;
+            }
+        }
+    }
+
+}
