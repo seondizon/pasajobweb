@@ -1,22 +1,52 @@
-import React from 'react'
-import { Form, Icon, Input, Button, Col, Row, Checkbox } from 'antd';
+import React, { useState } from 'react'
+import { Form, Icon, Input, Button, Col, Row, Alert } from 'antd';
 import Layout from '../Layouts/register'
 import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
-import axios from 'axios';
 import gql from 'graphql-tag'
 import { print } from 'graphql'
-// import { request } from 'request'
+import config from '../utils/config'
+import { useRouter } from 'next/router'
+import _ from 'lodash'
 
-const LOGIN = gql`query MyQuery {
-	auth_login(object: {email: "johnmaclained@gmail.com", password: "123456"}) {
+const LOGIN = gql`query LoginQuery(  $username:String!, $password:String! ) {
+	auth_login(object: {email:$username, password:$password} ) {
     token
  }
 }`;
 
+const requestAuth = (param) => {
+
+  const  myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const  graphql = JSON.stringify({
+    query: print( LOGIN ),
+    variables: {
+      "username":param.username,
+      "password":param.password
+    }
+  })
+
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: graphql,
+    redirect: 'follow'
+  };
+
+  return fetch( config.AUTH_ENDPOINT , requestOptions)
+    .then((response) => response.json())
+    .then((responseData) => responseData)
+    .catch(error => console.log('error', error));
+  
+}
+
 const Login = (props) => {
 
+  const [errors, setErrors] = useState([])
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
+  const router = useRouter()
   
   // const uri = 'https://auth.pasajob.apolidata.com/graphql';
   // const apolloFetch = createApolloFetch({ uri });
@@ -25,62 +55,24 @@ const Login = (props) => {
     e.preventDefault();
       props.form.validateFields( async (error, values) => {
         if (!error) {
-          // console.log( "asdasd", values )
+          const { username, password } = values
+          requestAuth({ username, password  }).then(
+            response => {
+              const authObj = response.data.auth_login
 
+              console.log(response)
 
+              if( !_.isNull( authObj ) ){
+                //storage
+                document.cookie = `authToken=${authObj.token}; path=/`;
+                router.push( "/" )
+              }else{
+                // error login
+                setErrors( response.errors )
+              }
 
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-
-          var graphql = JSON.stringify({
-            query: "query MyQuery(  $username:String!, $password:String! ) {\n	auth_login(object: {email: $username, password: $password}) {\n    token\n }\n}",
-            variables: {"username":"johnmaclained@gmail.com","password":"123456"}
-          })
-          var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: graphql,
-            redirect: 'follow'
-          };
-
-          await fetch("https://auth.pasajob.apolidata.com/graphql", requestOptions)
-            .then(response => console.log( response.text() ))
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-
-
-          // apolloFetch.use(({ request, options }, next) => {
-          //   if (!options.headers) {
-          //     options.headers = { 
-          //       "Access-Control-Allow-Origin" : "*",
-          //       "Content-Type" : "application/json"
-          //     };  // Create the headers object if needed.
-          //   }
-          //   options.headers['authorization'] = 'created token';
-          
-          //   next();
-          // });
-
-          // apolloFetch({ LOGIN })
-          //   .then(res => console.log("ret", res))
-          //   .catch(err => console.log("fa", err))
-
-          // await axios.post("https://auth.pasajob.apolidata.com/graphql", {
-          //   headers : { "Access-Control-Allow-Origin" : "*" }
-          // }, {
-          //   query:print( LOGIN ),
-          //   variables: {
-          //     username: values.username,
-          //     password: values.password
-          //   }
-          // })
-          // .then(res => console.log("ret", res))
-          // .catch(err => console.log("fa", err))
-
-
-          
-
-          
+            }
+          )
         }
       });
   }
@@ -142,6 +134,12 @@ const Login = (props) => {
           </Row>
 
           <Row>
+              <Col>
+                { errors.map( (d, i) => <Alert key={i} message={d.message} type="error" showIcon />)}
+            </Col>
+          </Row>
+
+          <Row style={{ marginTop : 10 }} >
             <Col>
               <Button type="primary" block htmlType="submit" >
                 Login
