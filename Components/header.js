@@ -4,7 +4,6 @@ import Profile from './profile-menu'
 
 export default () => {
 
-
   const jobpostMenu = () => (
     <Menu>
       <Menu.Item key="1">Create Post</Menu.Item>

@@ -8,6 +8,7 @@ import { print } from 'graphql'
 import config from '../utils/config'
 import { useRouter } from 'next/router'
 import _ from 'lodash'
+import { setCookie } from 'nookies'
 
 const LOGIN = gql`query LoginQuery(  $username:String!, $password:String! ) {
 	auth_login(object: {email:$username, password:$password} ) {
@@ -64,8 +65,15 @@ const Login = (props) => {
 
               if( !_.isNull( authObj ) ){
                 //storage
-                document.cookie = `authToken=${authObj.token}; path=/`;
+                // document.cookie = `authToken=${authObj.token}; path=/`;
+                
+                setCookie({}, 'authToken', authObj.token, {
+                  maxAge: 365 * 24 * 60 * 60,
+                  path: '/'
+                })
+
                 router.push( "/" )
+
               }else{
                 // error login
                 setErrors( response.errors )
@@ -127,8 +135,8 @@ const Login = (props) => {
           <Row>
             <Col>
               <div className="user-help" >
-                <Link href="#">Forgot password?</Link>
-                <Link href="#">Create account.</Link>
+                <Link href="#"><a>Forgot password?</a></Link>
+                <Link href="#"><a>Create account.</a></Link>
               </div>
             </Col>
           </Row>

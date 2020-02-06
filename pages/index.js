@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card } from 'antd';
 import Layout from '../Layouts/dashboard'
-
+import privateRoute from '../Components/hoc/privateRoute'
 const Dashboard = (props) => {
 
   return (
@@ -32,4 +32,9 @@ const Dashboard = (props) => {
   
 }
 
-export default Dashboard
+privateRoute.Dashboard = async (ctx) => {
+  console.log('yeaha dahsd', ctx)
+  return { test : "yeah" }
+}
+
+export default privateRoute(Dashboard)
