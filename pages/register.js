@@ -1,14 +1,88 @@
 import React, { useState } from 'react'
-import { Form, Icon, Input, Button, Col, Row, Checkbox } from 'antd';
+import { Form, Radio, Input, Button, Col, Row, Checkbox } from 'antd';
 import Layout from '../Layouts/register'
 import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
 
 const Register = (props) => {
 
+  const { getFieldDecorator } = props.form;
   const [state, setstate] = useState({
     step : 1
   })
+
+  const handleSubmit = () => {
+    
+  }
+
+  const dualSignUp = () => (
+    
+
+    <Form wrapperCol={{ span: 24 }} onSubmit={handleSubmit}>
+
+      <div className="sign-up-type" >
+        <Radio.Group defaultValue="seeker" buttonStyle="solid" size="Large" >
+          <Radio.Button value="seeker">Job Seeker</Radio.Button>
+          <Radio.Button value="recruiter">Job Recruiter</Radio.Button>
+        </Radio.Group>
+      </div>
+
+      <Form.Item label="Firstname">
+        {getFieldDecorator('firstname', {
+          rules: [{ required: true, message: 'Please input your firstname!' }],
+        })(<Input />)}
+      </Form.Item>
+
+      <Form.Item label="Lastname">
+        {getFieldDecorator('lastname', {
+          rules: [{ required: true, message: 'Please input your Lastname!' }],
+        })(<Input />)}
+      </Form.Item>
+
+      <Form.Item label="Email Address">
+        {getFieldDecorator('email', {
+          rules: [{ required: true, message: 'Please input your Email Address!' }],
+        })(<Input type="email" />)}
+      </Form.Item>
+
+      <Form.Item label="Password">
+        {getFieldDecorator('password', {
+          rules: [{ required: true, message: 'Please input your Password!' }],
+        })(<Input type="password" />)}
+      </Form.Item>
+
+      <Form.Item label="Re-Enter Password">
+        {getFieldDecorator('c_password', {
+          rules: [{ required: true, message: 'Please input your Password!' }],
+        })(<Input type="password" />)}
+      </Form.Item>
+
+      <Form.Item>
+
+          { getFieldDecorator('remember', {
+            valuePropName: 'checked',
+            initialValue: true,
+          })(
+            <Checkbox>
+            I agree to PasaJob's <a>Terms of use</a> and <a>Privacy Policy</a>.
+            </Checkbox>
+          )}
+
+
+          <Button type="primary" style={{ margin : "15px 0px" }} block onClick={ () => setstate({ step : 2 }) }>
+            Register
+          </Button>
+
+          <div>
+            Already have an account? <Link href="/login"><a>Sign in</a></Link>.
+          </div>
+      </Form.Item>
+
+
+
+    </Form>             
+
+  )
 
   const renderStepOne = () => (
 
@@ -72,7 +146,7 @@ const Register = (props) => {
                 name=""
                 label="Password"
                 >
-                  <Input type="password" placeholder="Password"/>
+                  <Input type="password" placeholder="Password"/>Login
               </FormItem>
             </Col>
           </Row>
@@ -144,8 +218,11 @@ const Register = (props) => {
       
       <div className="register-form">
 
-        { state.step == 1 && renderStepOne() }
-        { state.step == 2 && renderStep2() }
+        {/* { state.step == 1 && renderStepOne() } */}
+        {/* { state.step == 2 && renderStep2() } */}
+
+        { dualSignUp() } 
+        
 
       </div>
       
@@ -155,4 +232,4 @@ const Register = (props) => {
   
 }
 
-export default Register
+export default Form.create()(Register)

@@ -10,6 +10,28 @@
 @import 'dashboard';
 
 /*General*/
+
+button.ant-btn{
+    height: 45px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 22px;
+}
+
+input.ant-input{
+    height: 40px;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+.ant-form-item-control.has-error{
+    .ant-form-explain{
+        text-indent: 15px;
+        margin-top: 5px;
+        font-size: 12px;
+    }
+}
+
 footer.ant-layout-footer{
     padding: 15px 50px;
     p{

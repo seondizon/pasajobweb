@@ -32,9 +32,4 @@ const Dashboard = (props) => {
   
 }
 
-privateRoute.Dashboard = async (ctx) => {
-  console.log('yeaha dahsd', ctx)
-  return { test : "yeah" }
-}
-
 export default privateRoute(Dashboard)

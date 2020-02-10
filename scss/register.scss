@@ -1,4 +1,26 @@
 #registerPage{
+
+    .sign-up-type{
+        margin: 30px 0px;
+        .ant-radio-group{
+            display: flex;
+            label{
+                flex: 1;
+                height: 40px;
+                line-height: 2.4em;
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+                &:first-child{
+                    border-radius: 20px 0px 0px 20px;
+                }
+                &:last-child{
+                    border-radius: 0px 20px 20px 0px;
+                }
+            }
+        }
+    }
+
     .register-form{
         width: 600px;
         background-color: rgba($color: #ccc, $alpha: 0.7);

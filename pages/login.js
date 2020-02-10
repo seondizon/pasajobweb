@@ -136,7 +136,7 @@ const Login = (props) => {
             <Col>
               <div className="user-help" >
                 <Link href="#"><a>Forgot password?</a></Link>
-                <Link href="#"><a>Create account.</a></Link>
+                <Link href="/register"><a>Create account.</a></Link>
               </div>
             </Col>
           </Row>

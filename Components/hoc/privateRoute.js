@@ -1,18 +1,42 @@
 import React, { useEffect } from 'react';
-import { getCookies, parseCookies } from 'nookies'
+import { getCookies } from 'nookies'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
+import { parseCookies } from '../../Lib/parseCookies'
 
-const privateRoute = Component => props => {
+const privateRoute = ( Component ) => {
 
-    const router = useRouter()
-    const { authToken } = parseCookies();
+  const wrapComp =  ( props ) => {
+    return <Component {...props } />
+  };
 
-    useEffect(() => {
-        _.isUndefined( authToken ) && router.push("/login")
-    }, []);
+  /* get initial props of the child */
+  wrapComp.getInitialProps = async (ctx) => {
 
-  return _.isUndefined( authToken )? <></> : <Component {...props } />
-};
+    const cookies = parseCookies(ctx.req);
+
+    // TODO: fetch auth token everytime and compare to cookies
+
+    if( _.isUndefined( cookies.authToken ) ){
+
+      ctx.res.writeHead(303, {
+        Location: '/login'
+      })
+
+      ctx.res.end();
+      
+    }
+
+    const pageProps = Component.getInitialProps && 
+      (await Component.getInitialProps(ctx))
+    // Return props to child.
+    
+    return { ...pageProps }
+
+  }
+  
+  return wrapComp
+
+}
 
 export default privateRoute;
