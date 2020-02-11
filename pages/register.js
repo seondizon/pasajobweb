@@ -3,6 +3,44 @@ import { Form, Radio, Input, Button, Col, Row, Checkbox } from 'antd';
 import Layout from '../Layouts/register'
 import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
+import gql from 'graphql-tag';
+import { print } from 'graphql';
+import config from '../utils/config'
+
+const REGISTER = gql`mutation RegisterQuery( $first_name:String!, $last_name:String!, $email:String!, $password:String!, ) {
+  auth_register(object: {
+    email: $email, 
+    first_name: $first_name, 
+    last_name: $last_name, 
+    password: $password
+  }) {
+    email
+  }
+} `;
+
+const requestReg = (param) => {
+
+  const  myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const  graphql = JSON.stringify({
+    query: print( REGISTER ),
+    variables: param
+  })
+
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: graphql,
+    redirect: 'follow'
+  };
+
+  return fetch( config.AUTH_ENDPOINT , requestOptions)
+    .then((response) => response.json())
+    .then((responseData) => responseData)
+    .catch(error => console.log('error', error));
+  
+}
 
 const Register = (props) => {
 
@@ -11,8 +49,21 @@ const Register = (props) => {
     step : 1
   })
 
-  const handleSubmit = () => {
-    
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.form.validateFields( async (error, values) => {
+      
+      const { first_name, last_name, email, password } = values
+
+      requestReg({ first_name, last_name, email, password }).then(
+        response => {
+
+          console.log(response)
+
+        }
+      )
+
+    });
   }
 
   const dualSignUp = () => (
@@ -28,13 +79,13 @@ const Register = (props) => {
       </div>
 
       <Form.Item label="Firstname">
-        {getFieldDecorator('firstname', {
+        {getFieldDecorator('first_name', {
           rules: [{ required: true, message: 'Please input your firstname!' }],
         })(<Input />)}
       </Form.Item>
 
       <Form.Item label="Lastname">
-        {getFieldDecorator('lastname', {
+        {getFieldDecorator('last_name', {
           rules: [{ required: true, message: 'Please input your Lastname!' }],
         })(<Input />)}
       </Form.Item>
@@ -59,9 +110,9 @@ const Register = (props) => {
 
       <Form.Item>
 
-          { getFieldDecorator('remember', {
+          { getFieldDecorator('agree', {
             valuePropName: 'checked',
-            initialValue: true,
+            initialValue: false,
           })(
             <Checkbox>
             I agree to PasaJob's <a>Terms of use</a> and <a>Privacy Policy</a>.
@@ -69,7 +120,7 @@ const Register = (props) => {
           )}
 
 
-          <Button type="primary" style={{ margin : "15px 0px" }} block onClick={ () => setstate({ step : 2 }) }>
+          <Button type="primary" block htmlType="submit" style={{ margin : "15px 0px" }} >
             Register
           </Button>
 
