@@ -1,19 +1,16 @@
-import { useState } from 'react';
 import Head from '../Components/head'
 import { Layout } from 'antd';
+import { PageContext } from '../utils/context';
+import { useContext, useState } from 'react';
 import Loader from '../Components/global-loader';
-import LayoutCtx from '../Context/layout';
 
 const { Content } = Layout;
 
 const RegisterLayout = ({ children, title = 'Pasa Job', pageId="registerPage" }) => {
-   
-  const [ layoutState, setLayoutState ] = useState({
-    loader : false
-  })
+
+  const { pageState } = useContext(PageContext)
 
   return (
-    <LayoutCtx.Provider value={{ layoutState, setLayoutState }} >
       <div id={pageId} className="register-layout">
         <img className="background-logo" src="/images/logo.png" />
         <Head title={title} />
@@ -22,9 +19,8 @@ const RegisterLayout = ({ children, title = 'Pasa Job', pageId="registerPage" })
             {children}
           </Content>
         </Layout>
-        <Loader active={ layoutState.loader } />
+        <Loader active={ pageState.loading } />
       </div>
-    </LayoutCtx.Provider>
   )
 
 }

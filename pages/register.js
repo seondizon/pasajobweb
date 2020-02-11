@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
-import { Form, Radio, Input, Button, Col, Row, Checkbox } from 'antd';
+import React, { useState, useContext } from 'react'
+import { Form, Radio, Input, Button, Alert, Checkbox } from 'antd';
 import Layout from '../Layouts/register'
 import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 import config from '../utils/config'
+import { PageContext } from '../utils/context';
+import _ from 'lodash'
+import { useRouter } from 'next/router';
 
 const REGISTER = gql`mutation RegisterQuery( $first_name:String!, $last_name:String!, $email:String!, $password:String!, ) {
   auth_register(object: {
@@ -45,9 +48,9 @@ const requestReg = (param) => {
 const Register = (props) => {
 
   const { getFieldDecorator } = props.form;
-  const [state, setstate] = useState({
-    step : 1
-  })
+  const { setPageState } = useContext( PageContext )
+  const [ errors, setErrors ] = useState([])
+  const router = useRouter()
 
   const compareToFirstPassword = (rule, value, callback) => {
     const { form } = props;
@@ -60,14 +63,31 @@ const Register = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // set loading on
+    setPageState(os=>({ ...os, loading : true }))
+
     props.form.validateFields( async (error, values) => {
       
       const { first_name, last_name, email, password } = values
 
       requestReg({ first_name, last_name, email, password }).then(
         response => {
+          
+          // set loading off
+          setPageState(os=>({ ...os, loading : false }))
+          
+          const authObj = response.data.auth_register
 
-          console.log(response)
+          if( !_.isNull( authObj ) ){
+                
+            /* TODO: success message alert */
+            router.push( "/login" )
+
+          }else{
+            // error login
+            setErrors( response.errors )
+          }
 
         }
       )
@@ -137,7 +157,8 @@ const Register = (props) => {
             </Checkbox>
           )}
 
-
+          { errors.map( (d, i) => <Alert key={i} message={d.message} type="error" showIcon />)}
+          
           <Button type="primary" block htmlType="submit" style={{ margin : "15px 0px" }} >
             Register
           </Button>

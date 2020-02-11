@@ -1,23 +1,27 @@
 import Head from '../Components/head'
 import Header from '../Components/header'
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 import Footer from '../Components/footer'
+import { useState } from 'react';
 
-const DashboardLayout = ({ children, title = 'Dashboard', pageId="dashboardPage" }) => (
-  <div id={pageId} className="dashboard-layout">
-    <Head title={title} />
-    <Layout>
+const DashboardLayout = ({ children, title = 'Dashboard', pageId="dashboardPage" }) => {
 
-      <Header />
-      
-      <Layout.Content style={{ padding: '5px 50px' }} >
-        {children}
-      </Layout.Content>
-        
-      <Footer />
+  return ( 
+      <div id={pageId} className="dashboard-layout">
+        <Head title={title} />
+        <Layout>
 
-    </Layout>
-  </div>
-)
+          <Header />
+          
+          <Layout.Content style={{ padding: '5px 50px' }} >
+            {children}
+          </Layout.Content>
+            
+          <Footer />
+
+        </Layout>
+      </div> 
+  )
+}
 
 export default DashboardLayout

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Icon, Input, Button, Col, Row, Alert } from 'antd';
 import Layout from '../Layouts/register'
 import FormItem from 'antd/lib/form/FormItem';
@@ -9,6 +9,7 @@ import config from '../utils/config'
 import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { setCookie } from 'nookies'
+import { PageContext } from '../utils/context';
 
 const LOGIN = gql`query LoginQuery(  $username:String!, $password:String! ) {
 	auth_login(object: {email:$username, password:$password} ) {
@@ -45,15 +46,16 @@ const requestAuth = (param) => {
 
 const Login = (props) => {
 
+  const { pageState, setPageState } = useContext(PageContext)
   const [errors, setErrors] = useState([])
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
   const router = useRouter()
-  
-  // const uri = 'https://auth.pasajob.apolidata.com/graphql';
-  // const apolloFetch = createApolloFetch({ uri });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+      setPageState(os=>({ ...os, loading : true }))
+
       props.form.validateFields( async (error, values) => {
         if (!error) {
           const { username, password } = values
@@ -61,11 +63,7 @@ const Login = (props) => {
             response => {
               const authObj = response.data.auth_login
 
-              console.log(response)
-
               if( !_.isNull( authObj ) ){
-                //storage
-                // document.cookie = `authToken=${authObj.token}; path=/`;
                 
                 setCookie({}, 'authToken', authObj.token, {
                   maxAge: 365 * 24 * 60 * 60,
@@ -78,6 +76,8 @@ const Login = (props) => {
                 // error login
                 setErrors( response.errors )
               }
+
+              setPageState(os=>({ ...os, loading : false }))
 
             }
           )
