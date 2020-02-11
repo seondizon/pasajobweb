@@ -25,6 +25,7 @@
     "nookies": "^2.0.8",
     "null-loader": "^3.0.0",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "react-loading-overlay": "^1.0.1"
   }
 }

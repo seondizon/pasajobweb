@@ -39,6 +39,19 @@ footer.ant-layout-footer{
     }
 }
 
+#global-loader{
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 header.ant-layout-header{
     
     display: flex;
