@@ -178,9 +178,21 @@ const Register = (props) => {
     return (
 
       <Layout title="Registration" pageId="registerPage" >
-        <div className="register-form">
-          { dualSignUp() } 
+        <div className="flex-1 gradient-background">
+          <img src="/images/registration_artwork.png" className="flex-1 artwork"/>
+          <div className="flex-row">
+            <div className="flex-column">
+              <h3 className="title">Create your account</h3>
+              <p className="subtitle">Are you a Job Seeker or Employer?</p>
+            </div>
+          </div>
         </div>
+        <div className="flex-1 form">
+          <div className="form-container">
+            <p className="title">Register</p>
+            { dualSignUp() } 
+          </div>
+      </div>
       </Layout>
 
     )

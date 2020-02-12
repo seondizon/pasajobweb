@@ -1,21 +1,52 @@
 #loginPage{
-    .login-form{
-        width: 600px;
-        background-color: rgba($color: #ccc, $alpha: 0.7);
-        padding : 20px;
-        border-radius: 10px;
-        border: solid 1px #ccc;
-
-        button{ font-weight: bold; }
+    .flex-1 {
+        flex: 1;
     }
-    .user-help{
+    .gradient-background {
+        background-image: linear-gradient( $main-blue , $main-green );
+        height: 100vh;
         display: flex;
         align-items: center;
-        margin: 10px 0;
-        a{
-            flex: 1;
-            &:last-child{
-                text-align: right;
+        justify-content: center;
+        .logo {
+            height: 30vh;
+        }
+        .centered {
+            text-align: center;
+            .title {
+                color: white;
+                font-size: 45px;
+                font-weight: bold;
+            }
+            .subtitle {
+                color: white;
+                font-size: 25px;
+            }
+        }
+    }
+
+    .form {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .form-container {
+            border: 1px solid #DDD7D7;
+            height: 60vh;
+            width: 60vh;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow:
+            0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+            0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+            0 12.5px 10px rgba(0, 0, 0, 0.06),
+            0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+            0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+            0 100px 80px rgba(0, 0, 0, 0.12)
+            ;
+            .title {
+                color: #1B74E2;
+                font-size: 25px;
             }
         }
     }

@@ -6,13 +6,12 @@ import Loader from '../Components/global-loader';
 
 const { Content } = Layout;
 
-const RegisterLayout = ({ children, title = 'Pasa Job', pageId="registerPage" }) => {
+const LoginLayout = ({ children, title = 'Pasa Job', pageId="registerPage" }) => {
 
   const { pageState } = useContext(PageContext)
 
   return (
-      <div id={pageId} className="register-layout">
-        {/* <img className="background-logo" src="/images/logo.png" /> */}
+      <div id={pageId} className="login-layout">
         <Head title={title} />
         <Layout>
           <Content >
@@ -25,4 +24,4 @@ const RegisterLayout = ({ children, title = 'Pasa Job', pageId="registerPage" })
 
 }
 
-export default RegisterLayout
+export default LoginLayout

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Form, Icon, Input, Button, Col, Row, Alert } from 'antd';
-import Layout from '../Layouts/register'
+import LoginLayout from '../Layouts/login'
 import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
 import gql from 'graphql-tag'
@@ -161,12 +161,21 @@ const Login = (props) => {
 
 
   return (
-    
-    <Layout title="Login" pageId="loginPage" >
-    <div className="login-form">
-      { LoginForm() }
-    </div>
-    </Layout>
+    <LoginLayout title="Login" pageId="loginPage" >
+      <div className="flex-1 gradient-background">
+        <div className="flex-1 centered">
+          <img src="/images/logo.png" className="flex-1 logo"/>
+          <h3 className="title">PasaJob</h3>
+          <p className="subtitle">Job Seeker/Employer</p>
+        </div>
+      </div>
+      <div className="flex-1 form">
+        <div className="form-container">
+          <p className="title">LOGIN</p>
+          { LoginForm() }
+        </div>
+      </div>
+    </LoginLayout>
   )
   
 }

@@ -1,6 +1,5 @@
-.register-layout{
-
-    // background-image: linear-gradient( $main-green , $main-blue );
+.login-layout{
+    // background-image: linear-gradient( $main-blue , $main-green );
     .background-logo{
         opacity: 0.2;
         position: absolute;
@@ -18,8 +17,6 @@
 
     .ant-layout-content{
         display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .ant-form-item{
