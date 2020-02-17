@@ -54,11 +54,13 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-      setPageState(os=>({ ...os, loading : true }))
-
       props.form.validateFields( async (error, values) => {
         if (!error) {
+          
           const { username, password } = values
+
+          setPageState(os=>({ ...os, loading : true }))
+
           requestAuth({ username, password  }).then(
             response => {
               const authObj = response.data.auth_login

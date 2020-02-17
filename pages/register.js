@@ -64,33 +64,38 @@ const Register = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // set loading on
-    setPageState(os=>({ ...os, loading : true }))
 
     props.form.validateFields( async (error, values) => {
       
       const { first_name, last_name, email, password } = values
 
-      requestReg({ first_name, last_name, email, password }).then(
-        response => {
-          
-          // set loading off
-          setPageState(os=>({ ...os, loading : false }))
-          
-          const authObj = response.data.auth_register
+      if(!error){
 
-          if( !_.isNull( authObj ) ){
-                
-            /* TODO: success message alert */
-            router.push( "/login" )
+        // set loading on
+        setPageState(os=>({ ...os, loading : true }))
 
-          }else{
-            // error login
-            setErrors( response.errors )
+        requestReg({ first_name, last_name, email, password }).then(
+          response => {
+            
+            // set loading off
+            setPageState(os=>({ ...os, loading : false }))
+            
+            const authObj = response.data.auth_register
+
+            if( !_.isNull( authObj ) ){
+                  
+              /* TODO: success message alert */
+              router.push( "/login" )
+
+            }else{
+              // error login
+              setErrors( response.errors )
+            }
+
           }
+        )
 
-        }
-      )
+      }
 
     });
   }

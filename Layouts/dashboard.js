@@ -12,11 +12,14 @@ const DashboardLayout = ({ children, title = 'Dashboard', pageId="dashboardPage"
         <Layout>
 
           <Header />
-          
-          <Layout.Content style={{ padding: '5px 50px' }} >
-            {children}
-          </Layout.Content>
-            
+
+          <Layout>
+            <Layout.Sider>Sider</Layout.Sider>
+            <Layout.Content style={{ padding: '5px 50px' }} >
+              {children}
+            </Layout.Content>
+          </Layout> 
+
           <Footer />
 
         </Layout>

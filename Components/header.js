@@ -1,13 +1,14 @@
 import React from 'react'
 import { Layout, Menu, Dropdown } from 'antd';
 import Profile from './profile-menu'
+import Link from 'next/link';
 
 export default () => {
 
   const jobpostMenu = () => (
     <Menu>
-      <Menu.Item key="1">Create Post</Menu.Item>
-      <Menu.Item key="2">View Current Post</Menu.Item>
+      <Menu.Item key="1"><Link href="/create-jobpost" ><a>Create Post</a></Link></Menu.Item>
+      <Menu.Item key="2"><Link href="/jobpost"><a>View Current Post</a></Link></Menu.Item>
       <Menu.Item key="3">View Archived Post</Menu.Item>
     </Menu>
   )
