@@ -1,49 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { Form, Radio, Input, Button, Alert, Checkbox } from 'antd';
 import Layout from '../Layouts/register'
-import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
-import gql from 'graphql-tag';
-import { print } from 'graphql';
-import config from '../utils/config'
 import { PageContext } from '../utils/context';
 import _ from 'lodash'
 import { useRouter } from 'next/router';
-
-const REGISTER = gql`mutation RegisterQuery( $first_name:String!, $last_name:String!, $email:String!, $password:String!, ) {
-  auth_register(object: {
-    email: $email, 
-    first_name: $first_name, 
-    last_name: $last_name, 
-    password: $password
-  }) {
-    email
-  }
-} `;
-
-const requestReg = (param) => {
-
-  const  myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  const  graphql = JSON.stringify({
-    query: print( REGISTER ),
-    variables: param
-  })
-
-  const requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: graphql,
-    redirect: 'follow'
-  };
-
-  return fetch( config.AUTH_ENDPOINT , requestOptions)
-    .then((response) => response.json())
-    .then((responseData) => responseData)
-    .catch(error => console.log('error', error));
-  
-}
+import { requestReg } from '../stores/user';
 
 const Register = (props) => {
 

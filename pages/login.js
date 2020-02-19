@@ -3,46 +3,11 @@ import { Form, Icon, Input, Button, Col, Row, Alert } from 'antd';
 import LoginLayout from '../Layouts/login'
 import FormItem from 'antd/lib/form/FormItem';
 import Link from 'next/link';
-import gql from 'graphql-tag'
-import { print } from 'graphql'
-import config from '../utils/config'
 import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { setCookie } from 'nookies'
 import { PageContext } from '../utils/context';
-
-const LOGIN = gql`query LoginQuery(  $username:String!, $password:String! ) {
-	auth_login(object: {email:$username, password:$password} ) {
-    token
- }
-}`;
-
-const requestAuth = (param) => {
-
-  const  myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  const  graphql = JSON.stringify({
-    query: print( LOGIN ),
-    variables: {
-      "username":param.username,
-      "password":param.password
-    }
-  })
-
-  const requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: graphql,
-    redirect: 'follow'
-  };
-
-  return fetch( config.AUTH_ENDPOINT , requestOptions)
-    .then((response) => response.json())
-    .then((responseData) => responseData)
-    .catch(error => console.log('error', error));
-  
-}
+import { requestAuth } from '../stores/user';
 
 const Login = (props) => {
 
@@ -68,6 +33,11 @@ const Login = (props) => {
               if( !_.isNull( authObj ) ){
                 
                 setCookie({}, 'authToken', authObj.token, {
+                  maxAge: 365 * 24 * 60 * 60,
+                  path: '/'
+                })
+                
+                setCookie({}, 'user', JSON.stringify( authObj.user_info ), {
                   maxAge: 365 * 24 * 60 * 60,
                   path: '/'
                 })

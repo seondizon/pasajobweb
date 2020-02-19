@@ -2,6 +2,12 @@ import React from 'react'
 import { Card } from 'antd';
 import Layout from '../Layouts/dashboard'
 import privateRoute from '../Components/hoc/privateRoute'
+import JobPost from '../Components/dashboard/jobposts'
+import MostAppliedJob from '../Components/dashboard/mostAppliedJobs';
+import ShortlistedApplicants from '../Components/dashboard/shorlisted';
+import RecentApplicants from '../Components/dashboard/recentApplicants';
+import Schedule from '../Components/dashboard/schedule';
+
 const Dashboard = (props) => {
 
   return (
@@ -9,21 +15,17 @@ const Dashboard = (props) => {
 
         <div className="dash-content" >
           <Card className="dash-containers job-post" title="Job Posts" >
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
+            <JobPost />
+            <MostAppliedJob />
           </Card>
           
           <Card className="dash-containers candidate" title="Shortlisted Candidates" >
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
+            <ShortlistedApplicants />
+            <RecentApplicants />
           </Card>
 
           <Card className="dash-containers schedule" title="Schedule" >
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
+            <Schedule />
           </Card>
         </div>
 

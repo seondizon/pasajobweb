@@ -44,7 +44,7 @@ module.exports = withPlugins(
 
     publicRuntimeConfig: {
       AUTH_ENDPOINT:"https://auth.pasajob.apolidata.com/graphql",
-      HASURA_GRAPHQL:"http://localhost:8080/v1/graphql"
+      HASURA_GRAPHQL:"https://hasura.pasajob.apolidata.com/v1/graphql"
     }
 
   });

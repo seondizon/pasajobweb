@@ -16,4 +16,37 @@
             }
         }
     }
+
+    .dash-label{
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .dash-list{
+        list-style: none;
+        padding: 0;
+        margin-top: 15px;
+
+        li{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        li.sub{
+            padding-left: 15px;
+        }
+    }
+
+    .most-applied{
+        .dash-list{
+            li{
+                flex-direction: column;
+                span{
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
 }
